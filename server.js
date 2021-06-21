@@ -5,16 +5,24 @@ app.use(express.static("public")); // setting default directory
 app.set("view engine", "ejs"); // setting default view engine
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
-
+const setupDb = require('./db/init');
+setupDb();
+const notes = require('./db/model');
 // home route which redirects to a route with unique id
 app.get("/",(req,res)=>{
     res.redirect("/"+getUniqueId());
 })
 
 // route which renders the note html page with the unique url
-app.get("/:url",(req,res)=>{
-    const url = req.params.url;    
-    res.render("index",{url:url});
+app.get("/:url",async (req,res)=>{
+    const url = req.params.url;
+    const data = await notes.query().select().where("_link","=",url);
+    if(data.length==0){
+        await notes.query().insert({_link:url});
+    }
+    const val = data.length==0?{_Link:url,_Data:""}:data[0];
+    console.log("BAŞLANGIÇ:",val);
+    res.render("index",{url:url,yaziicerigi:val._Data});
 })
 
 // route which handles the url change upon clicking title
@@ -37,11 +45,19 @@ io.on("connection",socket=>{
     })
 
     //Called every time key is pressed
-    socket.on("message",data=>{
+    socket.on("message",(data)=>{
+        console.log(data);
+        saveData(url,data);
         socket.to(url).emit("message-updated",data);
     })
 })
-
+const saveData= async (url,data)=>{
+    console.log(url,data);
+    const result = await notes.query().where("_link","=",url).patch({
+        _data:data
+    })
+    console.log(url,result);
+}
 //Function for generating unique 5 character code for url
 const getUniqueId = ()=>{
     const variables = ["a","b","c","d","e",

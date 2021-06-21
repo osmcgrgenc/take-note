@@ -11,12 +11,13 @@
     <!-- get the unique url from the server-->
     <script>
         const url = "<%=url%>"
+        const yaziicerigi = `<%=yaziicerigi%>`
     </script>
 </head>
 <body>
     <!-- Title to refresh room-->
         <form name="refresh-form" action="/" method="POST">
-            <div class="intro">Take Note</div>
+            <div class="intro">Sazzy Not Defteri</div>
         </form>
         <div class="div-whitespace">
             Count whitespaces &nbsp;&nbsp;<input type="checkbox" id="whitespace">
@@ -32,12 +33,7 @@
         <div id="characters">Characters: 0</div>
     </div>
     <div class="notes">
-        <strong>Note:</strong><br>
-        1) Data is changed in real time.<br>
-        2) Note will be lost if page is refreshed.<br>
-        3) Click on heading to find new room.<br>
-        4) Custom room can be created by manipulating url.<br>
-        5) Best used to transfer text between devices.<br>
+        
     </div>
     
     <script src="/index.js"></script>
