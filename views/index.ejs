@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Take Note</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"> <!-- get robot font-->
+    <link rel="stylesheet" href="/index.css">
+    <script src="/socket.io/socket.io.js"></script> <!-- Require socket.io file-->
+    
+    <!-- get the unique url from the server-->
+    <script>
+        const url = "<%=url%>"
+    </script>
+</head>
+<body>
+    <!-- Title to refresh room-->
+        <form name="refresh-form" action="/" method="POST">
+            <div class="intro">Take Note</div>
+        </form>
+        <div class="div-whitespace">
+            Count whitespaces &nbsp;&nbsp;<input type="checkbox" id="whitespace">
+        </div>
+        
+        <hr>
+    <div class="container">
+        <textarea cols="30" rows="10" id="textInput"></textarea>
+    </div>
+    <hr/>
+    <div class="notes">
+        <div id="words">Words: 0</div>
+        <div id="characters">Characters: 0</div>
+    </div>
+    <div class="notes">
+        <strong>Note:</strong><br>
+        1) Data is changed in real time.<br>
+        2) Note will be lost if page is refreshed.<br>
+        3) Click on heading to find new room.<br>
+        4) Custom room can be created by manipulating url.<br>
+        5) Best used to transfer text between devices.<br>
+    </div>
+    
+    <script src="/index.js"></script>
+
+</body>
+</html>
