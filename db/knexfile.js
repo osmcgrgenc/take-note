@@ -4,12 +4,12 @@ module.exports = {
   development: {
     client: "postgresql",
     connection: {
-      host: "ec2-34-247-118-233.eu-west-1.compute.amazonaws.com",
+      host: "ec2-3-218-71-191.compute-1.amazonaws.com",
       port: 5432,
-      database: "d4nlsklhe7hgsf",
-      user: "elamapgtacnmgw",
+      database: "d7t4totks94eo9",
+      user: "lpljtcdqpifpof",
       password:
-        "aa66f346a1f5044bb6b7c56c9762534180cda637ac2afbce6c098c4cd64a8439",
+        "c3674f7ca7ee5ea541e6d410260fd3e26573ed605d33c15336e12d2cf4af5ae8",
       ssl: {
         rejectUnauthorized: false,
       },
@@ -19,7 +19,7 @@ module.exports = {
       max: 10,
     },
     migrations: {
-      tableName: "knex_migrations1",
+      tableName: "knex_migrations",
     },
     seeds: {
       directory: "./seeds",
