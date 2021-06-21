@@ -93,3 +93,6 @@ textarea {
     padding: 1rem;
     text-align: center;
 }
+a{
+    text-decoration: none;
+}
