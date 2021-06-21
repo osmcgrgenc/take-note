@@ -15,26 +15,23 @@
     </script>
 </head>
 <body>
-    <!-- Title to refresh room-->
-        <form name="refresh-form" action="/" method="POST">
-            <div class="intro">Sazzy Not Defteri</div>
-        </form>
+    <header>
+        <div class="intro"><a href="/">Sazik Note</a></div>
+    </header>
+    <main>
+        <div class="container">
+            <textarea cols="30" rows="10" id="textInput"></textarea>
+        </div>
+    </main>
+    <footer>
         <div class="div-whitespace">
             Count whitespaces &nbsp;&nbsp;<input type="checkbox" id="whitespace">
+            <div id="words">Words: 0</div>
+        <div id="characters">Characters: 0</div>
         </div>
         
-        <hr>
-    <div class="container">
-        <textarea cols="30" rows="10" id="textInput"></textarea>
-    </div>
-    <hr/>
-    <div class="notes">
-        <div id="words">Words: 0</div>
-        <div id="characters">Characters: 0</div>
-    </div>
-    <div class="notes">
-        
-    </div>
+    </footer>
+    
     
     <script src="/index.js"></script>
 
