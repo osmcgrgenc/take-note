@@ -13,28 +13,45 @@ header {
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
-  border-radius: 10px;
+  border-radius: 0 0 35px 35px;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  margin-top: 3px;
-  margin-bottom: 10px;
-  height: 10vh;
+  height: 70px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
 }
 
 main {
-  height: 70vh;
+  margin-top: 80px;
+  height: calc(100vh - 150px);
 }
 
 footer {
+  width: 100%;
   background: rgba(255, 255, 255, 0.25);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
-  border-radius: 10px;
+  border-radius: 35px 35px 0 0;
   border: 1px solid rgba(255, 255, 255, 0.18);
   margin-top: 10px;
-  height: 15vh;
+  height: 50px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  padding-left: 10% ;
+  padding-right: 10% ;
 }
-
+footer .column {
+  width: auto;
+  margin: 0 auto;
+  padding: 1rem;
+  text-align: center;
+  font-size: 10px;
+}
 textarea {
   width: 100%;
   resize: none;
