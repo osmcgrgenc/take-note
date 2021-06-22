@@ -95,4 +95,8 @@ countWhitespace.addEventListener("change",()=>{
 })
 
 textInput.value = yaziicerigi;
-console.log("icerik",yaziicerigi);
+
+/* Only register a service worker if it's supported */
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/service-worker.js');
+  }

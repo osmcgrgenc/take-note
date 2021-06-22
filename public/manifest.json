@@ -1,0 +1,42 @@
+{
+    "short_name": "sazik",
+    "name": "Sazik Note",
+    "description": "When you want to take note, open Sazik Note",
+    "icons": [
+      {
+        "src": "/images/mdpi.png",
+        "sizes": "48x48",
+        "type": "image/png"
+      },
+      {
+        "src": "/images/hdpi.png",
+        "sizes": "72x72",
+        "type": "image/png"
+      },
+      {
+        "src": "/images/xhdpi.png",
+        "sizes": "96x96",
+        "type": "image/png"
+      },
+      {
+        "src": "/images/xxhdpi.png",
+        "sizes": "144x144",
+        "type": "image/png"
+      },
+      {
+        "src": "/images/xxxhdpi.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "/images/GooglePlayStore.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "/",
+    "background_color": "#bd96ff",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#bd96ff"
+  }
