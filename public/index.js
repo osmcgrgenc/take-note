@@ -1,7 +1,6 @@
 if (window.location.protocol === 'http:') {
     
     location.href = window.location.href.replace('http://', 'https://');
-    return;   
 }
 
 const socket = io("/"); //getting dependency
