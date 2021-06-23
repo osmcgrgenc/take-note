@@ -1,3 +1,9 @@
+if (window.location.protocol === 'http:') {
+    
+    location.href = window.location.href.replace('http://', 'https://');
+    return;   
+}
+
 const socket = io("/"); //getting dependency
 socket.emit("initialize",url); //called every time new user joins the room to initialze the notepad
 //If somebody in the room has updated the notepad, new user joining gets the notepad initialized
