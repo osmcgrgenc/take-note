@@ -26,13 +26,32 @@ app.get("/:url", async (req, res) => {
 });
 
 // route which handles the url change upon clicking title
-app.post("/", (req, res) => {
-  res.redirect("/");
-});
+app.post("/",(req,res)=>{
+    res.redirect("/");
+})
 const connections = [];
 // basic io connection
 io.on("connection", (socket) => {
   let url;
+
+  socket.on("disconnect", function () {
+    connections[url]--;
+    socket.to(url).emit("user-count", connections[url]); //sends event to update the users notepad
+  });
+  socket.on("initialize", (data) => {
+    // called when a user joins a room
+    console.log("init", data);
+    url = data;
+    if (connections[url] || connections[url] >= 0) {
+      connections[url] = connections[url] + 1;
+    } else {
+      connections[url] = 1;
+    }
+    socket.join(data); // adds the socket to the room
+    socket.to(url).emit("message-initialize", url); //sends event to update the users notepad
+    socket.to(url).emit("user-count", connections[url]); //sends event to update the users notepad
+  });
+
 
   socket.on("disconnect", function () {
     connections[url]--;
@@ -147,6 +166,10 @@ const getUniqueId = () => {
 };
 
 //Setting up server
+<<<<<<< HEAD
 http.listen(process.env.PORT || 4000, () => {
   console.log("Listening...");
 });
+=======
+http.listen(process.env.PORT||4000,()=>{console.log("Listening...")})
+>>>>>>> 0f93a61bdc8aafac86e33922acea355ab306d6d7
