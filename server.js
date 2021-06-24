@@ -12,9 +12,10 @@ const notes = require("./db/model");
 app.get("/", (req, res) => {
   res.redirect("/" + getUniqueId());
 });
-app.get("/totalnotecount",(req,res)=>{
-  const data = await notes.query().select();
-  res.send(data);});
+app.get("/totalnotecount", async(req, res) => {
+  const data = await notes.query().select().orderBy("id");
+  res.json({result:data});
+});
 // route which renders the note html page with the unique url
 app.get("/:url", async (req, res) => {
   const url = req.params.url;
@@ -28,9 +29,9 @@ app.get("/:url", async (req, res) => {
 });
 
 // route which handles the url change upon clicking title
-app.post("/",(req,res)=>{
-    res.redirect("/");
-})
+app.post("/", (req, res) => {
+  res.redirect("/");
+});
 const connections = [];
 // basic io connection
 io.on("connection", (socket) => {
@@ -147,5 +148,6 @@ const getUniqueId = () => {
   return url;
 };
 
-
-http.listen(process.env.PORT||4000,()=>{console.log("Listening...")})
+http.listen(process.env.PORT || 4000, () => {
+  console.log("Listening...");
+});
