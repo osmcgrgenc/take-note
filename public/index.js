@@ -1,7 +1,7 @@
-if (window.location.protocol === 'http:') {
+// if (window.location.protocol === 'http:') {
     
-    location.href = window.location.href.replace('http://', 'https://');
-}
+//     location.href = window.location.href.replace('http://', 'https://');
+// }
 
 const socket = io("/"); //getting dependency
 socket.emit("initialize",url); //called every time new user joins the room to initialze the notepad
@@ -12,7 +12,10 @@ socket.on("message-initialize",data=>{
         socket.emit("message-initialized",textInput.value);
     }
 })
-
+socket.on("user-count",data=>{
+    let textInput = document.getElementById("userCount");
+    textInput.innerText="User Count : "+(data);
+})
 
 let textInput = document.querySelector("#textInput"); //Textarea for input
 let words = document.querySelector("#words"); //word counter
