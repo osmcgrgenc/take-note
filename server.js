@@ -40,6 +40,9 @@ io.on("connection", (socket) => {
     connections[url]--;
     socket.to(url).emit("user-count", connections[url]); //sends event to update the users notepad
   });
+  socket.on('chat', msg => {
+    socket.to(url).emit('chat', msg);
+  });
   socket.on("initialize", (data) => {
     // called when a user joins a room
     console.log("init", data);
