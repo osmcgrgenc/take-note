@@ -165,11 +165,5 @@ const getUniqueId = () => {
   return url;
 };
 
-//Setting up server
-<<<<<<< HEAD
-http.listen(process.env.PORT || 4000, () => {
-  console.log("Listening...");
-});
-=======
+
 http.listen(process.env.PORT||4000,()=>{console.log("Listening...")})
->>>>>>> 0f93a61bdc8aafac86e33922acea355ab306d6d7
