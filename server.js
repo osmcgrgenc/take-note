@@ -12,7 +12,9 @@ const notes = require("./db/model");
 app.get("/", (req, res) => {
   res.redirect("/" + getUniqueId());
 });
-
+app.get("/totalnotecount",(req,res)=>{
+  const data = await notes.query().select();
+  res.send(data);});
 // route which renders the note html page with the unique url
 app.get("/:url", async (req, res) => {
   const url = req.params.url;
