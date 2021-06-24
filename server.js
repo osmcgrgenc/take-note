@@ -29,15 +29,29 @@ app.get("/:url",async (req,res)=>{
 app.post("/",(req,res)=>{
     res.redirect("/");
 })
-
+const connections = [];
 // basic io connection
-io.on("connection",socket=>{
-    let url;
-    socket.on("initialize",data=>{ // called when a user joins a room
-        url = data;
-        socket.join(data); // adds the socket to the room
-        socket.to(url).emit("message-initialize",url); //sends event to update the users notepad
-    })
+io.on("connection", (socket) => {
+  let url;
+
+  socket.on("disconnect", function () {
+    connections[url]--;
+    socket.to(url).emit("user-count", connections[url]); //sends event to update the users notepad
+  });
+  socket.on("initialize", (data) => {
+    // called when a user joins a room
+    console.log("init", data);
+    url = data;
+    if (connections[url] || connections[url] >= 0) {
+      connections[url] = connections[url] + 1;
+    } else {
+      connections[url] = 1;
+    }
+    socket.join(data); // adds the socket to the room
+    socket.to(url).emit("message-initialize", url); //sends event to update the users notepad
+    socket.to(url).emit("user-count", connections[url]); //sends event to update the users notepad
+  });
+
 
     socket.on("message-initialized",data=>{ // New user initial notepad is filled if somebody has edited it
         socket.to(url).emit("update",data);
