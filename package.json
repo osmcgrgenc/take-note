@@ -1,12 +1,12 @@
 {
   "name": "take-note",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A notepad.pw clone to transfer text in real time using websockets",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
-  "author": "Akshat Kumar",
+  "author": "Osman Cagri GENC",
   "license": "ISC",
   "dependencies": {
     "ejs": "^3.1.3",

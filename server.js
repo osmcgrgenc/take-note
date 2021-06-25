@@ -37,6 +37,7 @@ io.on("connection", (socket) => {
   let url;
   socket.on("disconnect", function () {
     connections[url]--;
+    saveHistory(url);
     socket.to(url).emit("user-count", connections[url]); //sends event to update the users notepad
   });
   socket.on('chat-message', msg => {
@@ -67,11 +68,19 @@ io.on("connection", (socket) => {
   });
 });
 const saveData = async (url, data) => {
-  console.log(url, data);
   const result = await notes.query().where("_link", "=", url).patch({
     _data: data,
   });
   console.log(url, result);
+};
+const saveHistory = async (url) => {
+  const result = await notes.query().where("_link", "=", url).select();
+  result.forEach(element => {
+    const hist = element;
+    delete hist.id;
+    delete hist.created_at;
+    await history.query().insert(element);
+  });
 };
 //Function for generating unique 5 character code for url
 const getUniqueId = () => {
@@ -147,7 +156,9 @@ const getUniqueId = () => {
   }
   return url;
 };
-
+setInterval(async() => {
+  await notes.query().whereNull("_data").delete();
+}, 1000*60*60);
 http.listen(process.env.PORT || 4000, () => {
   console.log("Listening...");
 });
