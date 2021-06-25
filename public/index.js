@@ -7,10 +7,10 @@ function uuidv4() {
 }
 
 const userName = uuidv4();
-if (window.location.protocol === 'http:') {
+// if (window.location.protocol === 'http:') {
 
-     location.href = window.location.href.replace('http://', 'https://');
-}
+//      location.href = window.location.href.replace('http://', 'https://');
+// }
 
 const socket = io("/"); //getting dependency
 socket.emit("initialize", url); //called every time new user joins the room to initialze the notepad

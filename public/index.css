@@ -310,3 +310,8 @@ a {
     8px 9px #f41fbf, 9px 10px #f41fbf, 10px 11px #f41fbf, 11px 12px #f41fbf,
     12px 13px #f41fbf, 13px 14px #f41fbf, 14px 15px #f41fbf;
 }
+@media screen and (max-width: 600px) {
+  .onlyDesktop{
+    display: none;
+  }
+}
