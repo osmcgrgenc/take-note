@@ -75,7 +75,7 @@ const saveData = async (url, data) => {
 };
 const saveHistory = async (url) => {
   const result = await notes.query().where("_link", "=", url).select();
-  result.forEach(element => {
+  result.forEach(async(element) => {
     const hist = element;
     delete hist.id;
     delete hist.created_at;
