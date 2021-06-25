@@ -4,10 +4,12 @@
   padding: 0;
   font-family: "Roboto", sans-serif;
 }
+
 body {
   background-color: #bd96ff;
   color: white;
 }
+
 header {
   background: rgba(255, 255, 255, 0.25);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
@@ -25,6 +27,7 @@ header {
 main {
   margin-top: 80px;
   height: calc(100vh - 150px);
+  display: flex;
 }
 
 footer {
@@ -42,9 +45,10 @@ footer {
   bottom: 0;
   display: flex;
   justify-content: space-between;
-  padding-left: 10% ;
-  padding-right: 10% ;
+  padding-left: 10%;
+  padding-right: 10%;
 }
+
 footer .column {
   width: auto;
   margin: 0 auto;
@@ -52,28 +56,34 @@ footer .column {
   text-align: center;
   font-size: 10px;
 }
+
 /* width */
 ::-webkit-scrollbar {
-  margin-right:10px;
+  margin-right: 10px;
   width: 10px;
-  border-radius:5px;
+  border-radius: 5px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #bd96ff;margin-right:10px; border-radius:5px
+  background: #bd96ff;
+  margin-right: 10px;
+  border-radius: 5px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #a1a;margin-right:10px;
-  border-radius:5px
+  background: #a1a;
+  margin-right: 10px;
+  border-radius: 5px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #c1c;margin-right:10px;
+  background: #c1c;
+  margin-right: 10px;
 }
+
 textarea {
   width: 100%;
   resize: none;
@@ -86,12 +96,11 @@ textarea {
   border-radius: 5px;
   background-color: transparent;
   color: white;
-  margin-right:1px;
-  
+  margin-right: 1px;
 }
 
 .container {
-  width: 95%;
+  width: 90%;
   margin: 0 auto;
   display: flex;
   justify-content: center;
@@ -101,6 +110,161 @@ textarea {
   box-shadow: 20px 20px 60px #9677d8, -20px -20px 60px #cca1ff;
 
   height: 100%;
+}
+
+.chat-area {
+  width: 5%;
+  height: 100%;
+  background-color: #39dbc2;
+  border-radius: 5px 0 0 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.chat-area p {
+  transform: rotate(270deg);
+}
+
+.green{
+	background-color:#58b666;
+}
+.orange{
+	background-color:#ff725d;
+}
+.blue{
+	background-color:#6fbced;
+	margin-right:0;
+	margin-left:7px;
+}
+
+.chat-panel {
+  display: none;
+  z-index: 1;
+  margin-top: 80px;
+  height: calc(100vh - 150px);
+  font-size: 15px;
+  vertical-align: top;
+  border-radius: 5px;
+  background: #9f7ee5;
+  box-shadow: -20px 20px 60px #876bc3, 20px -20px 60px #b791ff;
+}
+
+.chat-panel .header {
+  height: 100px;
+}
+.chat-panel .header > * {
+  display: inline-block;
+  vertical-align: top;
+}
+.chat-panel .header img:first-child {
+  border-radius: 50%;
+  max-width: 50px;
+}
+
+.chat-panel .header img:last-child {
+  width: 24px;
+  margin-top: 8px;
+}
+.chat-panel .header div {
+  margin-left: 10px;
+  margin-right: 145px;
+}
+.chat-panel .header h2 {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+.chat-panel .header h3 {
+  font-size: 14px;
+  font-weight: normal;
+  color: #f1f1f1;
+}
+
+#chat {
+  padding-left: 0;
+  margin: 0;
+  list-style-type: none;
+  overflow-y: scroll;
+  height: calc(100% - 200px);
+  border-top: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+}
+#chat li {
+  padding: 10px 30px;
+}
+#chat h2,
+#chat h3 {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: normal;
+}
+#chat h3 {
+  color: #bbb;
+}
+#chat .entete {
+  margin-bottom: 5px;
+}
+#chat .message {
+  padding: 20px;
+  color: #fff;
+  line-height: 25px;
+  max-width: 90%;
+  display: inline-block;
+  text-align: left;
+  border-radius: 5px;
+}
+#chat .me {
+  text-align: right;
+}
+#chat .you .message {
+  background-color: #58b666;
+}
+#chat .me .message {
+  background-color: #6fbced;
+}
+#chat .triangle {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 10px 10px 10px;
+}
+#chat .you .triangle {
+  border-color: transparent transparent #58b666 transparent;
+  margin-left: 15px;
+}
+#chat .me .triangle {
+  border-color: transparent transparent #6fbced transparent;
+  margin-left: calc(100% - 35px);
+}
+
+.chat-panel .footer {
+  height: 100px;
+  display: flex;
+}
+.chat-panel .footer textarea {
+  resize: none;
+  border: none;
+  display: block;
+  width: 80%;
+  height: 100px;
+  border-radius: 3px;
+  padding: 20px;
+  font-size: 13px;
+  margin-left: 13px;
+}
+.chat-panel .footer textarea::placeholder {
+  color: #ddd;
+}
+.chat-panel .footer span {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #6fbced;
+  vertical-align: top;
+  margin-left: 5px;
+  margin-top: 5px;
+  display: inline-block;
 }
 
 .intro {
@@ -127,6 +291,7 @@ textarea {
   padding: 1rem;
   text-align: center;
 }
+
 a {
   text-decoration: none;
   color: #f1f1f1;
