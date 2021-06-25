@@ -185,6 +185,7 @@ function hiddenChat(){
     document.getElementsByTagName("main")[0].style.display = "flex";
     document.getElementsByClassName("chat-panel")[0].style.display = "none";
 }
+document.getElementById("chatName").innerText = url ;
 /* Only register a service worker if it's supported */
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("/service-worker.js");
