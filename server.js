@@ -8,12 +8,17 @@ const io = require("socket.io")(http);
 const setupDb = require("./db/init");
 setupDb();
 const notes = require("./db/model");
+const history = require("./db/history");
 // home route which redirects to a route with unique id
 app.get("/", (req, res) => {
   res.redirect("/" + getUniqueId());
 });
 app.get("/totalnotecount", async(req, res) => {
   const data = await notes.query().select().orderBy("id");
+  res.json({result:data});
+});
+app.get("/history", async(req, res) => {
+  const data = await history.query().select().orderBy("id");
   res.json({result:data});
 });
 // route which renders the note html page with the unique url
