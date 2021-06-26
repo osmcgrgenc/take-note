@@ -81,10 +81,11 @@ const saveData = async (url, data) => {
 const saveHistory = async (url) => {
   const result = await notes.query().where("_link", "=", url).select();
   result.forEach(async(element) => {
-    const hist = element;
-    delete hist.id;
-    delete hist.created_at;
-    await history.query().insert(element);
+    const hist = {
+      _data: element._Data,
+      _link:element._Link,
+    };
+    await history.query().insert(hist);
   });
 };
 //Function for generating unique 5 character code for url
