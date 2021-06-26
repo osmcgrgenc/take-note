@@ -7,8 +7,8 @@ const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 const setupDb = require("./db/init");
 setupDb();
-const notes = require("./db/model");
-const history = require("./db/history");
+const notes = require("./db/models/notes");
+const history = require("./db/models/history");
 // home route which redirects to a route with unique id
 app.get("/", (req, res) => {
   res.redirect("/" + getUniqueId());
