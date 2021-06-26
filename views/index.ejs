@@ -36,7 +36,9 @@
     </header>
     <main>
       <div class="container">
-        <textarea cols="30" rows="10" id="textInput"></textarea>
+        <textarea cols="30" rows="10" id="textInput" style="display:none"></textarea>
+        <div  id="js-editor"></div>
+        
       </div>
       <div class="chat-area" onclick="showChat();">
         <p>CHAT</p>
@@ -89,8 +91,8 @@
         <span id="sendMessage" onclick="messageSender();">Send</span>
       </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js" integrity="sha512-GZ1RIgZaSc8rnco/8CXfRdCpDxRCphenIiZ2ztLy3XQfCbQUSCuk8IudvNHxkRA3oUg6q0qejgN/qqyG1duv5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script async src="https://static.addtoany.com/menu/page.js"></script>
-
     <script src="/index.js"></script>
   </body>
 </html>

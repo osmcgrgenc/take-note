@@ -7,10 +7,44 @@ function uuidv4() {
 }
 
 const userName = uuidv4();
-if (window.location.protocol === 'http:') {
+// if (window.location.protocol === 'http:') {
 
-     location.href = window.location.href.replace('http://', 'https://');
-}
+//      location.href = window.location.href.replace('http://', 'https://');
+// }
+ace.require("ace/ext/language_tools");
+var jsEditor = ace.edit("js-editor");
+jsEditor.getSession().setMode("ace/mode/plain_text");
+jsEditor.session.on("change", function (delta) {
+  // delta.start, delta.end, delta.lines, delta.action
+  let text = ace.edit("js-editor").getSession().getValue(); // gets text area text
+  if (text.length === 0) {
+    // if empty set word count to 0
+    words.textContent = "Words: 0";
+  } else {
+    let wordCount = 1;
+    text.replace(/\s+/g, (a) => {
+      wordCount++;
+    }); // regex checks for all whitespaces and everytime it is found
+    // increment the word count
+    words.textContent = "Words: " + wordCount; // set the word count
+  }
+  if (countWhitespace.checked) {
+    //If count whitespace is checked then the length is the character count
+    characters.textContent = "Characters: " + text.length;
+  } else {
+    characters.textContent = "Characters: " + text.replace(/\s+/g, "").length; // replace all
+    //white spaces to count characters
+  }
+
+  if (text.length > 0) socket.emit("message", text); // send updated text to server
+});
+let textInput = document.querySelector("#textInput"); //Textarea for input
+let words = document.querySelector("#words"); //word counter
+let characters = document.querySelector("#characters"); //character counter
+let intro = document.querySelector(".intro"); //Title for changing url
+let countWhitespace = document.getElementById("whitespace"); // checkbox for counting whitespace;
+let sendMessage = document.getElementById("sendMessage");
+let sendMessageArea = document.querySelector("#sendMessageArea"); //Textarea for input
 
 const socket = io("/"); //getting dependency
 socket.emit("initialize", url); //called every time new user joins the room to initialze the notepad
@@ -26,22 +60,15 @@ socket.on("user-count", (data) => {
   textInput.innerText = "User Count : " + data;
 });
 
-let textInput = document.querySelector("#textInput"); //Textarea for input
-let words = document.querySelector("#words"); //word counter
-let characters = document.querySelector("#characters"); //character counter
-let intro = document.querySelector(".intro"); //Title for changing url
-let countWhitespace = document.getElementById("whitespace"); // checkbox for counting whitespace;
-let sendMessage = document.getElementById("sendMessage");
-let sendMessageArea = document.querySelector("#sendMessageArea"); //Textarea for input
-function messageSender () {
+function messageSender() {
   let text = sendMessageArea.value; // gets text area text
   const data = {
-      user : userName,
-      message: text
-  }
+    user: userName,
+    message: text,
+  };
   if (text.length > 0) {
     const chat = document.getElementById("chat");
-      chat.innerHTML += `
+    chat.innerHTML += `
           <li class="me">
               <div class="entete">
                   <h3>${new Date().toLocaleTimeString()}</h3>
@@ -54,11 +81,12 @@ function messageSender () {
               </div>
           </li>
           `;
-          chat.scrollTop = chat.scrollHeight;
-      socket.emit("chat-message", data);
-      sendMessageArea.value = "";
-    } // send updated text to server
-};
+    chat.scrollTop = chat.scrollHeight;
+    socket.emit("chat-message", data);
+    sendMessageArea.value = "";
+  } // send updated text to server
+}
+
 //Put request sent to server to redirect to new url
 intro.addEventListener("click", () => {
   document.forms["refresh-form"].submit(); // since form is submitted using div this step is required
@@ -93,6 +121,7 @@ textInput.addEventListener("keyup", () => {
 socket.on("message-updated", (data) => {
   let textInput = document.querySelector("#textInput");
   textInput.value = data;
+  ace.edit("js-editor").getSession().setValue(data);
   if (countWhitespace.checked) {
     characters.textContent = "Characters: " + data.length;
   } else {
@@ -162,7 +191,6 @@ socket.on("chat", (data) => {
         `;
   }
   chat.scrollTop = chat.scrollHeight;
-
 });
 //Change character count when users checks or unchecks checkbox
 countWhitespace.addEventListener("change", () => {
@@ -177,15 +205,18 @@ countWhitespace.addEventListener("change", () => {
 });
 
 textInput.value = yaziicerigi;
-function showChat(){
-    document.getElementsByTagName("main")[0].style.display = "none";
-    document.getElementsByClassName("chat-panel")[0].style.display = "block";
+ace.edit("js-editor").getSession().setValue(yaziicerigi); // gets text area text
+
+function showChat() {
+  document.getElementsByTagName("main")[0].style.display = "none";
+  document.getElementsByClassName("chat-panel")[0].style.display = "block";
 }
-function hiddenChat(){
-    document.getElementsByTagName("main")[0].style.display = "flex";
-    document.getElementsByClassName("chat-panel")[0].style.display = "none";
+function hiddenChat() {
+  document.getElementsByTagName("main")[0].style.display = "flex";
+  document.getElementsByClassName("chat-panel")[0].style.display = "none";
 }
-document.getElementById("chatName").innerText = url ;
+
+document.getElementById("chatName").innerText = url;
 /* Only register a service worker if it's supported */
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("/service-worker.js");
