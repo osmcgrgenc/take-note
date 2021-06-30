@@ -1,15 +1,14 @@
 const { knexSnakeCaseMappers } = require("objection");
-
+console.log(process.env);
 module.exports = {
   development: {
     client: "postgresql",
     connection: {
-      host: "ec2-3-218-71-191.compute-1.amazonaws.com",
-      port: 5432,
-      database: "d7t4totks94eo9",
-      user: "lpljtcdqpifpof",
-      password:
-        "c3674f7ca7ee5ea541e6d410260fd3e26573ed605d33c15336e12d2cf4af5ae8",
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      database: process.env.DB_DATABASE,
+      user: process.env.DB_USER,
+      password:process.env.DB_PASSWORD,
       ssl: {
         rejectUnauthorized: false,
       },

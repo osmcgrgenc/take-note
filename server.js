@@ -1,4 +1,6 @@
 // -----Setting up packages-------
+const dotenv = require('dotenv');
+dotenv.config();
 const express = require("express");
 const app = express();
 app.use(express.static("public")); // setting default directory
