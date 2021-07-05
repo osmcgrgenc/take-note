@@ -9,27 +9,32 @@ const setupDb = require("./db/init");
 setupDb();
 const notes = require("./db/models/notes");
 const history = require("./db/models/history");
+const password = require("./db/models/passwords");
 // home route which redirects to a route with unique id
 app.get("/", (req, res) => {
   res.redirect("/" + getUniqueId());
 });
-app.get("/totalnotecount", async(req, res) => {
+app.get("/totalnotecount", async (req, res) => {
   const data = await notes.query().select().orderBy("id");
-  res.json({result:data});
+  res.json({ result: data });
 });
-app.get("/history", async(req, res) => {
+app.get("/history", async (req, res) => {
   const data = await history.query().select().orderBy("id");
-  res.json({result:data});
+  res.json({ result: data });
 });
 // route which renders the note html page with the unique url
 app.get("/:url", async (req, res) => {
   const url = req.params.url;
-  const data = await notes.query().select().where("_link", "=", url);
+  const data = await notes
+    .query()
+    .withGraphFetched("passwords")
+    .where("_link", "=", url);
   if (data.length == 0) {
     await notes.query().insert({ _link: url });
   }
+  console.log(data);
   const val = data.length == 0 ? { _Link: url, _Data: "" } : data[0];
-  res.render("index", { url: url, yaziicerigi: val._Data });
+  res.render("index", { url: url, yaziicerigi: val._Data, password:val.passwords });
 });
 
 // route which handles the url change upon clicking title
@@ -45,8 +50,12 @@ io.on("connection", (socket) => {
     saveHistory(url);
     socket.to(url).emit("user-count", connections[url]); //sends event to update the users notepad
   });
-  socket.on('chat-message', msg => {
-    socket.to(url).emit('chat', msg);
+  socket.on("chat-message", (msg) => {
+    socket.to(url).emit("chat", msg);
+  });
+  socket.on("password", (msg) => {
+    savePassword(url, msg);
+    socket.to(url).emit("password-saved", msg);
   });
   socket.on("initialize", (data) => {
     // called when a user joins a room
@@ -78,12 +87,26 @@ const saveData = async (url, data) => {
   });
   console.log(url, result);
 };
+const savePassword = async (url, data) => {
+  const result = await password.query().where("note_id", "=", url).patch({
+    password: data,
+    password_confirmation: data,
+  });
+  if (result == 0) {
+    await password.query().insert({
+      note_id: url,
+      password: data,
+      password_confirmation: data,
+    });
+  }
+  console.log(url, result);
+};
 const saveHistory = async (url) => {
   const result = await notes.query().where("_link", "=", url).select();
-  result.forEach(async(element) => {
+  result.forEach(async (element) => {
     const hist = {
       _data: element._Data,
-      _link:element._Link,
+      _link: element._Link,
     };
     await history.query().insert(hist);
   });
@@ -162,9 +185,9 @@ const getUniqueId = () => {
   }
   return url;
 };
-setInterval(async() => {
+setInterval(async () => {
   await notes.query().whereNull("_data").delete();
-}, 1000*60*60);
+}, 1000 * 60 * 60);
 http.listen(process.env.PORT || 4000, () => {
   console.log("Listening...");
 });

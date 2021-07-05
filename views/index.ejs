@@ -27,6 +27,7 @@
     <script>
       const url = "<%=url%>";
       const yaziicerigi = `<%=yaziicerigi%>`;
+      const password = `<%=password%>`;
     </script>
   </head>
 
@@ -88,6 +89,10 @@
         ></textarea>
         <span id="sendMessage" onclick="messageSender();">Send</span>
       </div>
+    </div>
+    <div class="pass-area">
+      <label>Password:</label>
+      <input type="text" oninput="passwordChange()" id="passwordInput">
     </div>
     <script async src="https://static.addtoany.com/menu/page.js"></script>
 

@@ -9,9 +9,13 @@ function uuidv4() {
 const userName = uuidv4();
 if (window.location.protocol === 'http:') {
 
-     location.href = window.location.href.replace('http://', 'https://');
+    // location.href = window.location.href.replace('http://', 'https://');
 }
-
+if(password){
+  if(window.prompt("Password")!=password){
+    alert("elendiniz");
+  }
+}
 const socket = io("/"); //getting dependency
 socket.emit("initialize", url); //called every time new user joins the room to initialze the notepad
 //If somebody in the room has updated the notepad, new user joining gets the notepad initialized
@@ -184,6 +188,10 @@ function showChat(){
 function hiddenChat(){
     document.getElementsByTagName("main")[0].style.display = "flex";
     document.getElementsByClassName("chat-panel")[0].style.display = "none";
+}
+function passwordChange(){
+  const pass = document.getElementById("passwordInput").value;
+  socket.emit("password", pass);
 }
 document.getElementById("chatName").innerText = url ;
 /* Only register a service worker if it's supported */
