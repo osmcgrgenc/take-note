@@ -100,7 +100,7 @@ function loadSample(mode) {
 		}
 
 		var oldModel = editor.getModel();
-		var newModel = monaco.editor.createModel(data, mode.modeId);
+		var newModel = monaco.editor.createModel(oldModel?oldModel.getValue():"", mode.modeId);
 		editor.setModel(newModel);
 		if (oldModel) {
 			oldModel.dispose();
