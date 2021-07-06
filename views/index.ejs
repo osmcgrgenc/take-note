@@ -1,71 +1,117 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sazik Note</title>
-    <link rel="manifest" href="/manifest.json" />
-    <link rel="icon" href="/images/128x128.png" type="image/x-icon" />
-    <link rel="apple-touch-icon" href="/images/Icon-76@2x.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="white" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="apple-mobile-web-app-title" content="Sazik Note" />
-    <meta name="msapplication-TileImage" content="/images/Icon-72@2x.png" />
-    <meta name="msapplication-TileColor" content="#FFFFFF" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
-      rel="stylesheet"
-    />
-    <!-- get robot font-->
-    <link rel="stylesheet" href="/index.css" />
-    <script src="/socket.io/socket.io.js"></script>
-    <!-- Require socket.io file-->
+<html lang="UTF-8">
 
-    <!-- get the unique url from the server-->
-    <script>
-      const url = "<%=url%>";
-      const yaziicerigi = `<%=yaziicerigi%>`;
-      const password = `<%=password%>`;
-    </script>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sazik Note</title>
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" href="/images/128x128.png" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="/images/Icon-76@2x.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="white" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-title" content="Sazik Note" />
+  <meta name="msapplication-TileImage" content="/images/Icon-72@2x.png" />
+  <meta name="msapplication-TileColor" content="#FFFFFF" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <!-- get robot font-->
+  <link rel="stylesheet" href="/main.css" />
+  <script src="/socket.io/socket.io.js"></script>
+  <!-- Require socket.io file-->
+  <link data-inline="yes-please" href="/lib/bootstrap-cosmo.css" rel="stylesheet">
+  <link data-inline="yes-please" href="/lib/bootstrap-responsive.min.css" rel="stylesheet">
+  <link data-inline="yes-please" href="/all.css" rel="stylesheet">
+  <link data-inline="yes-please" href="/index/index.css" rel="stylesheet">
+
+  <link data-name="vs/editor/editor.main" rel="stylesheet"
+    href="https://microsoft.github.io/monaco-editor/node_modules/monaco-editor/min/vs/editor/editor.main.css">
+
+  <!-- get the unique url from the server-->
+  <script>
+    const url = "<%=url%>";
+    const yaziicerigi = `<%=yaziicerigi%>`;
+    const password = `<%=password%>`;
+  </script>
+</head>
+
+<body>
 
   <body>
-    <header>
-      <div class="intro"><a href="/">Sazik Note</a></div>
-    </header>
-    <main>
-      <div class="container">
-        <textarea cols="30" rows="10" id="textInput"></textarea>
-      </div>
-      <div class="chat-area" onclick="showChat();">
-        <p>CHAT</p>
-      </div>
-    </main>
+    <div class="area"></div>
+    <nav class="main-menu">
+      <ul>
+        <li>
+          <a onclick="saveFile();">
+            <i class="fa fa-save fa-2x"></i>
+            <span class="nav-text">
+              Save
+            </span>
+          </a>
 
-    <footer>
-      <div class="column onlyDesktop">
-        Count whitespaces &nbsp;&nbsp;<input type="checkbox" id="whitespace" />
-        <div id="characters">Characters: 0</div>
-        <div id="words">Words: 0</div>
-      </div>
+        </li>
+        <li>
+          <a onclick="changePassword();">
+            <i class="fa fa-key fa-2x"></i>
+            <span class="nav-text">
+              Password
+            </span>
+          </a>
+
+        </li>
+        <li class="has-subnav">
+          <a onclick="showChat();">
+            <i class="fa fa-comment fa-2x"></i>
+            <span class="nav-text">
+              Chat
+            </span>
+          </a>
+
+        </li>
       
-      
-      <!-- AddToAny BEGIN -->
-      <div class="column a2a_kit a2a_kit_size_32 a2a_default_style">
-        <a class="a2a_button_facebook"></a>
-        <a class="a2a_button_twitter"></a>
-        <a class="a2a_button_email"></a>
-        <a class="a2a_button_whatsapp"></a>
-        <a class="a2a_button_linkedin"></a>
-        <a class="a2a_button_telegram"></a>
+        
+      </ul>
+
+      <ul class="logout">
+        <li>
+          <a href="/">
+            <i class="fa fa-folder-open fa-2x"></i>
+            <span class="nav-text">
+              New Note
+            </span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <main>
+    <section>
+      <div class="container">
+        <div class="row">
+          <div class="span4">
+            <label class="control-label">Language</label>
+            <select class="language-picker"></select>
+          </div>
+          <div class="span4">
+            <label class="control-label">Theme</label>
+            <select class="theme-picker">
+              <option>Visual Studio</option>
+              <option>Visual Studio Dark</option>
+              <option>High Contrast Dark</option>
+            </select>
+          </div>
+        </div>
+        <div class="editor-frame">
+          <div class="loading editor" style="display: none;">
+            <div class="progress progress-striped active">
+              <div class="bar"></div>
+            </div>
+          </div>
+          <div id="editor"></div>
+        </div>
       </div>
-      <!-- AddToAny END -->
-      <div class="column onlyDesktop">
-        <div id="userCount"></div>
-      </div>
-    </footer>
+    </section>
+  </main>
     <div class="chat-panel">
       <div class="header">
         <img
@@ -90,12 +136,30 @@
         <span id="sendMessage" onclick="messageSender();">Send</span>
       </div>
     </div>
-    <div class="pass-area">
-      <label>Password:</label>
-      <input type="text" oninput="passwordChange()" id="passwordInput">
-    </div>
-    <script async src="https://static.addtoany.com/menu/page.js"></script>
 
+    <!-- <script async src="https://static.addtoany.com/menu/page.js"></script> -->
+
+    <!-- <script src="/index.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"
+      integrity="sha256-wS9gmOZBqsqWxgIVgA8Y9WcQOa7PgSIX+rPA0VL2rbQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.0/bootstrap.min.js"
+      integrity="sha256-u+l2mGjpmGK/mFgUncmMcFKdMijvV+J3odlDJZSNUu8=" crossorigin="anonymous"></script>
+
+    <script>
+      var require = {
+        paths: {
+          'vs': '/min/vs'
+        }
+      };
+    </script>
+    <script src="https://microsoft.github.io/monaco-editor/node_modules/monaco-editor/min/vs/loader.js"></script>
+    <script src="https://microsoft.github.io/monaco-editor/node_modules/monaco-editor/min/vs/editor/editor.main.nls.js">
+    </script>
+    <script src="https://microsoft.github.io/monaco-editor/node_modules/monaco-editor/min/vs/editor/editor.main.js">
+    </script>
+    <script data-inline="yes-please" src="/index/index.js"></script>
     <script src="/index.js"></script>
+
   </body>
+
 </html>
