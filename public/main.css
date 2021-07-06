@@ -1,5 +1,5 @@
 @import url(//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css);
-}
+
 
 @import url(https://fonts.googleapis.com/css?family=Titillium+Web:300);
 
@@ -38,9 +38,11 @@ section {
 	left: 65px;
 	width: calc(100% - 70px);
 }
-section .container{
+
+section .container {
 	height: 100%;
 }
+
 .main-menu:hover,
 nav.main-menu.expanded {
 	width: 250px;
@@ -60,6 +62,7 @@ nav.main-menu.expanded {
 	-webkit-transition: width .05s linear;
 	transition: width .05s linear;
 	-webkit-transform: translateZ(0) scale(1, 1);
+	transform: translateZ(0) scale(1, 1);
 	z-index: 1000;
 }
 
@@ -83,6 +86,7 @@ nav.main-menu.expanded {
 	font-size: 14px;
 	text-decoration: none;
 	-webkit-transform: translateZ(0) scale(1, 1);
+	transform: translateZ(0) scale(1, 1);
 	-webkit-transition: all .1s linear;
 	transition: all .1s linear;
 
@@ -161,154 +165,203 @@ nav.main-menu li.active>a,
 	height: 100%;
 }
 
-.green{
-	background-color:#58b666;
+.green {
+	background-color: #58b666;
 }
-.orange{
-	background-color:#ff725d;
+
+.orange {
+	background-color: #ff725d;
 }
-.blue{
-	background-color:#6fbced;
-	margin-right:0;
-	margin-left:7px;
+
+.blue {
+	background-color: #6fbced;
+	margin-right: 0;
+	margin-left: 7px;
 }
 
 .chat-panel {
-  display: none;
-  z-index: 1;
-  height: 100vh;
-  font-size: 15px;
-  vertical-align: top;
-  border-radius: 5px;
-  background: #212121;
-  margin-left: 65px;
-  box-shadow: -20px 20px 60px #a1a1a1, 20px -20px 60px #212121;
+	display: none;
+	z-index: 1;
+	height: 100vh;
+	font-size: 15px;
+	vertical-align: top;
+	border-radius: 5px;
+	background: #212121;
+	margin-left: 65px;
+	box-shadow: -20px 20px 60px #a1a1a1, 20px -20px 60px #212121;
 }
 
 .chat-panel .header {
-  height: 100px;
+	height: 100px;
 }
-.chat-panel .header > * {
-  display: inline-block;
-  vertical-align: top;
+
+.chat-panel .header>* {
+	display: inline-block;
+	vertical-align: top;
 }
+
 .chat-panel .header img:first-child {
-  border-radius: 50%;
-  max-width: 50px;
+	border-radius: 50%;
+	max-width: 50px;
 }
 
 .chat-panel .header img:last-child {
-  width: 24px;
-  margin-top: 8px;
+	width: 24px;
+	margin-top: 8px;
 }
+
 .chat-panel .header div {
-  margin-left: 10px;
-  margin-right: 145px;
+	margin-left: 10px;
+	margin-right: 145px;
 }
+
 .chat-panel .header h2 {
-  font-size: 16px;
-  margin-bottom: 5px;
+	font-size: 16px;
+	margin-bottom: 5px;
 }
+
 .chat-panel .header h3 {
-  font-size: 14px;
-  font-weight: normal;
-  color: #f1f1f1;
+	font-size: 14px;
+	font-weight: normal;
+	color: #f1f1f1;
 }
 
 #chat {
-  padding-left: 0;
-  margin: 0;
-  list-style-type: none;
-  overflow-y: scroll;
-  height: calc(100% - 200px);
-  border-top: 2px solid #fff;
-  border-bottom: 2px solid #fff;
+	padding-left: 0;
+	margin: 0;
+	list-style-type: none;
+	overflow-y: scroll;
+	height: calc(100% - 200px);
+	border-top: 2px solid #fff;
+	border-bottom: 2px solid #fff;
 }
+
 #chat li {
-  padding: 10px 30px;
+	padding: 10px 30px;
 }
+
 #chat h2,
 #chat h3 {
-  display: inline-block;
-  font-size: 13px;
-  font-weight: normal;
+	display: inline-block;
+	font-size: 13px;
+	font-weight: normal;
 }
+
 #chat h3 {
-  color: #bbb;
+	color: #bbb;
 }
+
 #chat .entete {
-  margin-bottom: 5px;
+	margin-bottom: 5px;
 }
+
 #chat .message {
-  padding: 20px;
-  color: #fff;
-  line-height: 25px;
-  max-width: 90%;
-  display: inline-block;
-  text-align: left;
-  border-radius: 5px;
+	padding: 20px;
+	color: #fff;
+	line-height: 25px;
+	max-width: 90%;
+	display: inline-block;
+	text-align: left;
+	border-radius: 5px;
 }
+
 #chat .me {
-  text-align: right;
+	text-align: right;
 }
+
 #chat .you .message {
-  background-color: #58b666;
+	background-color: #58b666;
 }
+
 #chat .me .message {
-  background-color: #6fbced;
+	background-color: #6fbced;
 }
+
 #chat .triangle {
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 0 10px 10px 10px;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 0 10px 10px 10px;
 }
+
 #chat .you .triangle {
-  border-color: transparent transparent #58b666 transparent;
-  margin-left: 15px;
+	border-color: transparent transparent #58b666 transparent;
+	margin-left: 15px;
 }
+
 #chat .me .triangle {
-  border-color: transparent transparent #6fbced transparent;
-  margin-left: calc(100% - 35px);
+	border-color: transparent transparent #6fbced transparent;
+	margin-left: calc(100% - 35px);
 }
 
 .chat-panel .footer {
-  height: 100px;
-  display: flex;
+	height: 100px;
+	display: flex;
 }
+
 .chat-panel .footer textarea {
-  resize: none;
-  border: none;
-  display: block;
-  width: 80%;
-  height: 100px;
-  border-radius: 3px;
-  padding: 20px;
-  font-size: 13px;
-  margin-left: 13px;
-  background: transparent;
-  color:#f1f1f1
+	resize: none;
+	border: none;
+	display: block;
+	width: 80%;
+	height: 100px;
+	border-radius: 3px;
+	padding: 20px;
+	font-size: 13px;
+	margin-left: 13px;
+	background: transparent;
+	color: #f1f1f1
 }
+
 .chat-panel .footer textarea::placeholder {
-  color: #ddd;
+	color: #ddd;
 }
+
 .chat-panel .footer span {
-  text-decoration: none;
-  text-transform: uppercase;
-  font-weight: bold;
-  color: #6fbced;
-  vertical-align: top;
-  margin-left: 5px;
-  margin-top: 5px;
-  display: inline-block;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #6fbced;
+	vertical-align: top;
+	margin-left: 5px;
+	margin-top: 5px;
+	display: inline-block;
 }
-.editor-frame{
+
+.editor-frame {
 	height: 100%;
 }
-#editor{
+
+#editor {
 	height: 100%;
 
 }
+
+/* [FULL SCREEN SPINNER] */
+#spinner-back, #spinner-front {
+    position: fixed;
+    width: 100vw;
+    transition: all 1s;
+    visibility: hidden;
+    opacity: 0;
+  }
+  #spinner-back {
+	margin-top: -54px;
+    z-index: 9998;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+  }
+  #spinner-front {
+    z-index: 999;
+    color: #fff;
+    text-align: center;
+    margin-top: 50vh;
+    transform: translateY(-50%);
+  }
+  #spinner-back.show, #spinner-front.show {
+    visibility: visible;
+    opacity: 1;
+  }
 @font-face {
 	font-family: 'Titillium Web';
 	font-style: normal;

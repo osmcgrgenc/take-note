@@ -22,6 +22,10 @@ app.get("/history", async (req, res) => {
   const data = await history.query().select().orderBy("id");
   res.json({ result: data });
 });
+app.get("/passwords", async (req, res) => {
+  const data = await password.query().select().orderBy("id");
+  res.json({ result: data });
+});
 // route which renders the note html page with the unique url
 app.get("/:url", async (req, res) => {
   const url = req.params.url;
@@ -34,7 +38,11 @@ app.get("/:url", async (req, res) => {
   }
   console.log(data);
   const val = data.length == 0 ? { _Link: url, _Data: "" } : data[0];
-  res.render("index", { url: url, yaziicerigi: val._Data, password:val.passwords });
+  res.render("index", {
+    url: url,
+    yaziicerigi: val._Data,
+    password: val.passwords?val.passwords.password:null,
+  });
 });
 
 // route which handles the url change upon clicking title
@@ -54,6 +62,7 @@ io.on("connection", (socket) => {
     socket.to(url).emit("chat", msg);
   });
   socket.on("password", (msg) => {
+    console.log("password", msg);
     savePassword(url, msg);
     socket.to(url).emit("password-saved", msg);
   });
@@ -82,12 +91,14 @@ io.on("connection", (socket) => {
   });
 });
 const saveData = async (url, data) => {
+  console.log("saveData", url, data);
   const result = await notes.query().where("_link", "=", url).patch({
     _data: data,
   });
-  console.log(url, result);
+  console.log("saveData", url, result);
 };
 const savePassword = async (url, data) => {
+  console.log("savePassword", url, data);
   const result = await password.query().where("note_id", "=", url).patch({
     password: data,
     password_confirmation: data,
@@ -99,17 +110,20 @@ const savePassword = async (url, data) => {
       password_confirmation: data,
     });
   }
-  console.log(url, result);
+  console.log("savePassword", url, result);
 };
 const saveHistory = async (url) => {
-  const result = await notes.query().where("_link", "=", url).select();
-  result.forEach(async (element) => {
-    const hist = {
-      _data: element._Data,
-      _link: element._Link,
-    };
-    await history.query().insert(hist);
-  });
+  console.log("saveHistory", url);
+  if (url) {
+    const result = await notes.query().where("_link", "=", url).select();
+    result.forEach(async (element) => {
+      const hist = {
+        _data: element._Data,
+        _link: element._Link,
+      };
+      await history.query().insert(hist);
+    });
+  }
 };
 //Function for generating unique 5 character code for url
 const getUniqueId = () => {

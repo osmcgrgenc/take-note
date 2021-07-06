@@ -1,4 +1,3 @@
-/// <reference path="../../release/monaco.d.ts" />
 
 "use strict";
 

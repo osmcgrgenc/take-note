@@ -11,13 +11,18 @@ if (window.location.protocol === "http:") {
   // location.href = window.location.href.replace('http://', 'https://');
 }
 if (password) {
-  if (window.prompt("Password") != password) {
-    alert("elendiniz");
+  if (window.prompt("Password") !== password) {
+    location.reload();
   }
 }
+
+
+let sendMessage = document.getElementById("sendMessage");
+let sendMessageArea = document.querySelector("#sendMessageArea"); //Textarea for input
+const socket = io("/"); //getting dependency
+
 setTimeout(() => {
   
-  const socket = io("/"); //getting dependency
   socket.emit("initialize", url); //called every time new user joins the room to initialze the notepad
   //If somebody in the room has updated the notepad, new user joining gets the notepad initialized
   socket.on("message-initialize", (data) => {
@@ -32,37 +37,7 @@ setTimeout(() => {
     textInput.innerText = data;
   });
 
-  let sendMessage = document.getElementById("sendMessage");
-  let sendMessageArea = document.querySelector("#sendMessageArea"); //Textarea for input
-  function messageSender() {
-    let text = sendMessageArea.value; // gets text area text
-    const data = {
-      user: userName,
-      message: text,
-    };
-    if (text.length > 0) {
-      const chat = document.getElementById("chat");
-      chat.innerHTML += `
-          <li class="me">
-              <div class="entete">
-                  <h3>${new Date().toLocaleTimeString()}</h3>
-                  <h2>Siz</h2>
-                  <span class="status blue"></span>
-              </div>
-              <div class="triangle"></div>
-              <div class="message">
-                  ${data.message}
-              </div>
-          </li>
-          `;
-      chat.scrollTop = chat.scrollHeight;
-      socket.emit("chat-message", data);
-      sendMessageArea.value = "";
-    } // send updated text to server
-  }
-console.log(editor);
   editor.onDidChangeModelContent((e) => {
-    console.log(e);
     socket.emit("message", editor.getModel().getValue());
   });
   //Receive updated text from server
@@ -127,22 +102,56 @@ console.log(editor);
   if (oldModel) {
     oldModel.dispose();
   }
-  function showChat() {
-    document.getElementsByTagName("main")[0].style.display = "none";
-    document.getElementsByClassName("chat-panel")[0].style.display = "block";
-  }
-  function hiddenChat() {
-    document.getElementsByTagName("main")[0].style.display = "flex";
-    document.getElementsByClassName("chat-panel")[0].style.display = "none";
-  }
-  function passwordChange() {
-    const pass = document.getElementById("passwordInput").value;
-    socket.emit("password", pass);
-  }
+  
   document.getElementById("chatName").innerText = url;
+  hide();
+
 }, 5000);
 
 /* Only register a service worker if it's supported */
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("/service-worker.js");
+}
+function changePassword(){
+  const value = window.prompt("Şifrenizi belirleyiniz:","şifreniz");
+  socket.emit("password", value);
+
+}
+function showChat() {
+  document.getElementsByTagName("main")[0].style.display = "none";
+  document.getElementsByClassName("chat-panel")[0].style.display = "block";
+}
+function hiddenChat() {
+  document.getElementsByTagName("main")[0].style.display = "flex";
+  document.getElementsByClassName("chat-panel")[0].style.display = "none";
+}
+function passwordChange() {
+  const pass = document.getElementById("passwordInput").value;
+  socket.emit("password", pass);
+}
+function messageSender() {
+  let text = sendMessageArea.value; // gets text area text
+  const data = {
+    user: userName,
+    message: text,
+  };
+  if (text.length > 0) {
+    const chat = document.getElementById("chat");
+    chat.innerHTML += `
+        <li class="me">
+            <div class="entete">
+                <h3>${new Date().toLocaleTimeString()}</h3>
+                <h2>Siz</h2>
+                <span class="status blue"></span>
+            </div>
+            <div class="triangle"></div>
+            <div class="message">
+                ${data.message}
+            </div>
+        </li>
+        `;
+    chat.scrollTop = chat.scrollHeight;
+    socket.emit("chat-message", data);
+    sendMessageArea.value = "";
+  } // send updated text to server
 }
