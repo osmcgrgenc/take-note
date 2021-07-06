@@ -7,8 +7,10 @@ function uuidv4() {
 }
 
 const userName = uuidv4();
-if (window.location.protocol === "http:") {
-  // location.href = window.location.href.replace('http://', 'https://');
+
+if (window.location.protocol === 'http:') {
+
+     location.href = window.location.href.replace('http://', 'https://');
 }
 if (password) {
   if (window.prompt("Password") !== password) {
@@ -129,6 +131,7 @@ function passwordChange() {
   const pass = document.getElementById("passwordInput").value;
   socket.emit("password", pass);
 }
+
 function messageSender() {
   let text = sendMessageArea.value; // gets text area text
   const data = {
@@ -155,3 +158,9 @@ function messageSender() {
     sendMessageArea.value = "";
   } // send updated text to server
 }
+/* Only register a service worker if it's supported */
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/service-worker.js");
+}
+window.document.onload = function(e){window.navigator.vibrate(1000);}
+
