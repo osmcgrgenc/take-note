@@ -11,13 +11,13 @@ const userName = uuidv4();
 if (window.location.protocol === 'http:') {
 
      location.href = window.location.href.replace('http://', 'https://');
-}
+}else{
 if (password) {
   if (window.prompt("Password") !== password) {
     location.reload();
   }
 }
-
+}
 
 let sendMessage = document.getElementById("sendMessage");
 let sendMessageArea = document.querySelector("#sendMessageArea"); //Textarea for input
