@@ -180,6 +180,7 @@ nav.main-menu li.active>a,
 }
 
 .chat-panel {
+	margin-top:-54px;
 	display: none;
 	z-index: 1;
 	height: 100vh;
