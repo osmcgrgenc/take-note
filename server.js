@@ -207,6 +207,6 @@ setInterval(async () => {
   await notes.query().whereNull("_data").delete();
   await notes.query().where("_data", "").delete();
 }, 1000 * 60 * 60);
-http.listen(process.env.PORT || 4000, () => {
+http.listen( 4000, () => {
   console.log("Listening...");
 });
