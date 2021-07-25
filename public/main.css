@@ -35,11 +35,11 @@ section {
 	top: 0;
 	bottom: 0;
 	height: 100%;
-	left: 65px;
-	width: calc(100% - 70px);
+	left: 61px;
+	width: calc(100% - 71px);
 }
 
-section .container {
+section .conteyner {
 	height: 100%;
 }
 

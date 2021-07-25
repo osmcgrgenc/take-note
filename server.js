@@ -41,7 +41,7 @@ app.get("/:url", async (req, res) => {
   res.render("index", {
     url: url,
     yaziicerigi: val._Data,
-    password: val.passwords?val.passwords.password:null,
+    password: val.passwords ? val.passwords.password : null,
   });
 });
 
@@ -121,7 +121,11 @@ const saveHistory = async (url) => {
         _data: element._Data,
         _link: element._Link,
       };
-      await history.query().insert(hist);
+      if (
+        (await history.query().where("_data", element._Data).select()).length ==
+        0
+      )
+        await history.query().insert(hist);
     });
   }
 };
@@ -201,6 +205,7 @@ const getUniqueId = () => {
 };
 setInterval(async () => {
   await notes.query().whereNull("_data").delete();
+  await notes.query().where("_data", "").delete();
 }, 1000 * 60 * 60);
 http.listen(process.env.PORT || 4000, () => {
   console.log("Listening...");

@@ -10,7 +10,7 @@ const userName = uuidv4();
 
 if (window.location.protocol === 'http:') {
 
-     location.href = window.location.href.replace('http://', 'https://');
+     //location.href = window.location.href.replace('http://', 'https://');
 }else{
 if (password) {
   if (window.prompt("Password") !== password) {
