@@ -1,15 +1,21 @@
 // -----Setting up packages-------
 const express = require("express");
 const app = express();
+
+var reactViews = require('express-react-views');
 app.use(express.static("public")); // setting default directory
-app.set("view engine", "ejs"); // setting default view engine
+app.set('view engine', 'jsx');
+app.engine('jsx', reactViews.createEngine());
+
 const http = require("http").createServer(app);
 const io = require("socket.io")(http);
+
 const setupDb = require("./db/init");
 setupDb();
 const notes = require("./db/models/notes");
 const history = require("./db/models/history");
 const password = require("./db/models/passwords");
+
 // home route which redirects to a route with unique id
 app.get("/", (req, res) => {
   res.redirect("/" + getUniqueId());
@@ -44,11 +50,11 @@ app.get("/:url", async (req, res) => {
     password: val.passwords ? val.passwords.password : null,
   });
 });
-
 // route which handles the url change upon clicking title
 app.post("/", (req, res) => {
   res.redirect("/");
 });
+
 const connections = [];
 // basic io connection
 io.on("connection", (socket) => {
@@ -206,7 +212,10 @@ const getUniqueId = () => {
 setInterval(async () => {
   await notes.query().whereNull("_data").delete();
   await notes.query().where("_data", "").delete();
+  await history.query().where("_data", "").delete();
+  await history.query().whereNull("_data").delete();
 }, 1000 * 60 * 60);
+
 http.listen(process.env.PORT || 4000, () => {
   console.log("Listening...");
 });
