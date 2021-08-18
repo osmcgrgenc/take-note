@@ -20,6 +20,7 @@ const password = require("./db/models/passwords");
 app.get("/", (req, res) => {
   res.redirect("/" + getUniqueId());
 });
+app.get("/favicon.ico",(req,res)=>{res.sendStatus(404)})
 app.get("/totalnotecount", async (req, res) => {
   const data = await notes.query().select().orderBy("id");
   res.json({ result: data });
@@ -42,7 +43,6 @@ app.get("/:url", async (req, res) => {
   if (data.length == 0) {
     await notes.query().insert({ _link: url });
   }
-  console.log(data);
   const val = data.length == 0 ? { _Link: url, _Data: "" } : data[0];
   res.render("index", {
     url: url,
