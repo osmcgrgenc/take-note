@@ -38,7 +38,7 @@ const Editor = (props) => {
   const editorRef = useRef();
 
   // Called on initialization, adds ref
-  const handleEditorDidMount = (_, editor) => {
+  const handleEditorDidMount = (editor) => {
     console.log("cagrigenc");
     setIsEditorReady(true);
     editorRef.current = editor;
@@ -208,12 +208,11 @@ const Editor = (props) => {
             </div>
 
             <ControlledEditor
-            theme="dark"
               height="100vh"
-              defaultValue="// some comment"
-              defaultLanguage="javascript"
-              loading={isEditorReady}
-              beforeMount={handleEditorDidMount}
+              theme={theme}
+              language={language}
+              value={value}
+              editorDidMount={handleEditorDidMount}
             />
           </div>
         </BrowserView>

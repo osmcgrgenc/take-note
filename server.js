@@ -36,6 +36,9 @@ app.get("/passwords", async (req, res) => {
 // route which renders the note html page with the unique url
 app.get("/:url", async (req, res) => {
   const url = req.params.url;
+  if (url.indexOf('.') > -1) {
+    return;
+  }
   const data = await notes
     .query()
     .withGraphFetched("passwords")
